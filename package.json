@@ -2,7 +2,7 @@
 	"name": "bob-highlight-duplicates",
 	"displayName": "Highlight Duplicates [bob]",
 	"description": "Highlight duplicated lines (same as in Sublime Text 3) [bob]",
-	"version": "2.0.0",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -13,85 +13,85 @@
 		"onLanguage:markdown",
 		"onLanguage:shellscript",
 		"onLanguage:plaintext",
-		"onCommand:highlight-duplicates.toggleHighlightDuplicates",
-		"onCommand:highlight-duplicates.selectDuplicates",
-		"onCommand:highlight-duplicates.removeDuplicates"
+		"onCommand:bob-highlight-duplicates.toggleHighlightDuplicates",
+		"onCommand:bob-highlight-duplicates.selectDuplicates",
+		"onCommand:bob-highlight-duplicates.removeDuplicates"
 	],
 	"publisher": "bob",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/robert-corlett/HighlightDuplicates-vscode.git"
+		"url": "https://github.com/robert-corlett/bob-HighlightDuplicates-vscode.git"
 	},
 	"icon": "preview.png",
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "highlight-duplicates.toggleHighlightDuplicates",
+				"command": "bob-highlight-duplicates.toggleHighlightDuplicates",
 				"title": "Highlight Duplicates: Toggle Highlighting"
 			},
 			{
-				"command": "highlight-duplicates.selectDuplicates",
+				"command": "bob-highlight-duplicates.selectDuplicates",
 				"title": "Highlight Duplicates: Select Duplicates"
 			},
 			{
-				"command": "highlight-duplicates.removeDuplicates",
+				"command": "bob-highlight-duplicates.removeDuplicates",
 				"title": "Highlight Duplicates: Remove Duplicates"
 			}
 		],
 		"configuration": {
 			"properties": {
-				"highlightDuplicates.active": {
+				"bob-highlightDuplicates.active": {
 					"type": "boolean",
 					"default": false,
 					"description": ""
 				},
-				"highlightDuplicates.borderWidth": {
+				"bob-highlightDuplicates.borderWidth": {
 					"type": "string",
 					"default": "1px",
 					"description": ""
 				},
-				"highlightDuplicates.borderStyle": {
+				"bob-highlightDuplicates.borderStyle": {
 					"type": "string",
 					"default": "solid",
 					"description": ""
 				},
-				"highlightDuplicates.borderColor": {
+				"bob-highlightDuplicates.borderColor": {
 					"type": "string",
 					"default": "red",
 					"description": ""
 				},
-				"highlightDuplicates.trimWhiteSpace": {
+				"bob-highlightDuplicates.trimWhiteSpace": {
 					"type": "boolean",
 					"default": true,
 					"description": ""
 				},
-				"highlightDuplicates.ignoreCase": {
+				"bob-highlightDuplicates.ignoreCase": {
 					"type": "boolean",
 					"default": false,
 					"description": ""
 				},
-				"highlightDuplicates.minLineLength": {
+				"bob-highlightDuplicates.minLineLength": {
 					"type": "integer",
 					"default": 1,
 					"description": ""
 				},
-				"highlightDuplicates.minDuplicateCount": {
+				"bob-highlightDuplicates.minDuplicateCount": {
 					"type": "integer",
 					"default": 1,
 					"description": ""
 				},
-				"highlightDuplicates.ignoreList": {
+				"bob-highlightDuplicates.ignoreList": {
 					"type": "array",
 					"default": [],
 					"description": ""
 				},
-				"highlightDuplicates.ignoreCaseForIgnoreList": {
+				"bob-highlightDuplicates.ignoreCaseForIgnoreList": {
 					"type": "boolean",
 					"default": true,
 					"description": ""
 				},
-				"highlightDuplicates.useSelection": {
+				"bob-highlightDuplicates.useSelection": {
 					"type": "boolean",
 					"default": false,
 					"description": ""
@@ -126,15 +126,5 @@
 		"vscode-test": "^1.5.2",
 		"webpack": "^5.38.1",
 		"webpack-cli": "^4.7.0"
-	},
-	"__metadata": {
-		"id": "15e1a256-ccb3-4103-b33f-6ecf32ae81ce",
-		"publisherId": "bc668eac-75e5-4951-a045-d21512069803",
-		"publisherDisplayName": "Nate Mills",
-		"targetPlatform": "undefined",
-		"updated": false,
-		"isPreReleaseVersion": false,
-		"installedTimestamp": 1682423877744,
-		"preRelease": false
 	}
 }
