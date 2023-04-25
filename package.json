@@ -43,7 +43,7 @@
 			"properties": {
 				"bob-highlightDuplicates.active": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": ""
 				},
 				"bob-highlightDuplicates.borderWidth": {
@@ -58,7 +58,7 @@
 				},
 				"bob-highlightDuplicates.borderColor": {
 					"type": "string",
-					"default": "red",
+					"default": "yellow",
 					"description": ""
 				},
 				"bob-highlightDuplicates.trimWhiteSpace": {
@@ -68,12 +68,12 @@
 				},
 				"bob-highlightDuplicates.ignoreCase": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": ""
 				},
 				"bob-highlightDuplicates.minLineLength": {
 					"type": "integer",
-					"default": 1,
+					"default": 5,
 					"description": ""
 				},
 				"bob-highlightDuplicates.minDuplicateCount": {
@@ -95,6 +95,11 @@
 					"type": "boolean",
 					"default": false,
 					"description": ""
+				},
+				"bob-highlightDuplicates.languages": {
+					"type": "string",
+					"default": "plaintext shellscript markdown",
+					"description": "list of languages that will be monitored for duplicate lines"
 				}
 			}
 		}
