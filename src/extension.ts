@@ -54,8 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//Document change listener, only listens for changes in active editor
 	vscode.workspace.onDidChangeTextDocument((changeEvent) => {
+		var currentLanguage: string = vscode.window.activeTextEditor?.document.languageId!;
+		var languagesToMatch: string = settings.languages!;
+		
 		try {
-			if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
+			if (!languagesToMatch.includes(currentLanguage)) {
 				return;
 			}
 			
@@ -73,7 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//Active window change listener
 	vscode.window.onDidChangeActiveTextEditor(() => {
 		try {
-			if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
+			if (!languagesToMatch.includes(currentLanguage)) {
 				return;
 			} else {
 				highlightLines();
@@ -106,30 +109,27 @@ export function activate(context: vscode.ExtensionContext) {
 	//Command: toggleHighlightDuplicates
 	function highlightLines(updateAllVisibleEditors = false) {
 		vscode.window.visibleTextEditors.forEach((editor: vscode.TextEditor) => {
+			var currentLanguage: string = vscode.window.activeTextEditor?.document.languageId!;
+			var languagesToMatch: string = settings.languages!;
+	
 			try {
-				if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
+				if (!languagesToMatch.includes(currentLanguage)) {
 					return;
 				}
-
 				if (!editor) {
 					return;
 				}
 				if (!updateAllVisibleEditors && editor !== vscode.window.activeTextEditor) {
 					return;
 				}
-
-				if (String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
-					unHighlightLines(editor.document.uri);
-				}
+				
+				unHighlightLines(editor.document.uri);
 
 				if (!settings.active) {
 					return;
 				}
-				
-				if (String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {				
-					setDecorations(editor, countLines(editor, false));
-				}
 
+				setDecorations(editor, countLines(editor, false));
 			}
 			catch (error) {
 				console.error("Error from 'highlightLines' -->", error);
@@ -165,8 +165,10 @@ export function activate(context: vscode.ExtensionContext) {
 	function selectLines() {
 		try {
 			var editor = vscode.window.activeTextEditor;
-				
-			if (editor?.document && editor?.selections && String(settings.languages).includes(editor?.document.languageId)) {
+			var currentLanguage: string = vscode.window.activeTextEditor?.document.languageId!;
+			var languagesToMatch: string = settings.languages!;
+	
+			if (editor?.document && editor?.selections && languagesToMatch.includes(currentLanguage)) {
 				var countedLines: CountedLines = countLines(editor);
 				var newSelections = [];
 
@@ -188,8 +190,10 @@ export function activate(context: vscode.ExtensionContext) {
 	function removeDuplicates() {
 		try {
 			var editor = vscode.window.activeTextEditor;
-
-			if (String(settings.languages).includes(editor?.document.languageId) && editor?.document && editor?.selections) {
+			var currentLanguage: string = vscode.window.activeTextEditor?.document.languageId!;
+			var languagesToMatch: string = settings.languages!;
+	
+			if (languagesToMatch.includes(currentLanguage) && editor?.document && editor?.selections) {
 				var countedLines: CountedLines = removeFirst(countLines(editor));
 
 				editor.edit(builder => {
