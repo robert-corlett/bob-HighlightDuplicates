@@ -75,6 +75,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//Active window change listener
 	vscode.window.onDidChangeActiveTextEditor(() => {
+		var currentLanguage: string = vscode.window.activeTextEditor?.document.languageId!;
+		var languagesToMatch: string = settings.languages!;
 		try {
 			if (!languagesToMatch.includes(currentLanguage)) {
 				return;
