@@ -55,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//Document change listener, only listens for changes in active editor
 	vscode.workspace.onDidChangeTextDocument((changeEvent) => {
 		try {
-			if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+			if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
 				return;
 			}
 			
@@ -73,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//Active window change listener
 	vscode.window.onDidChangeActiveTextEditor(() => {
 		try {
-			if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+			if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
 				return;
 			} else {
 				highlightLines();
@@ -107,7 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function highlightLines(updateAllVisibleEditors = false) {
 		vscode.window.visibleTextEditors.forEach((editor: vscode.TextEditor) => {
 			try {
-				if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+				if (!String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
 					return;
 				}
 
@@ -118,7 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
 					return;
 				}
 
-				if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+				if (String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {
 					unHighlightLines(editor.document.uri);
 				}
 
@@ -126,7 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
 					return;
 				}
 				
-				if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {				
+				if (String(settings.languages).includes(vscode.window.activeTextEditor?.document.languageId)) {				
 					setDecorations(editor, countLines(editor, false));
 				}
 
@@ -166,7 +166,7 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			var editor = vscode.window.activeTextEditor;
 				
-			if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId) && editor?.document && editor?.selections) {
+			if (editor?.document && editor?.selections && String(settings.languages).includes(editor?.document.languageId)) {
 				var countedLines: CountedLines = countLines(editor);
 				var newSelections = [];
 
@@ -189,7 +189,7 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			var editor = vscode.window.activeTextEditor;
 
-			if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId) && editor?.document && editor?.selections) {
+			if (String(settings.languages).includes(editor?.document.languageId) && editor?.document && editor?.selections) {
 				var countedLines: CountedLines = removeFirst(countLines(editor));
 
 				editor.edit(builder => {
@@ -222,7 +222,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function countLines(editor: vscode.TextEditor, useSelection: boolean = settings.useSelection): CountedLines {
 		var results: CountedLines = {};
 		
-// 		if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+// 		if (!String(settings.languages).includes(vscode.window.activeTextEditor.document.languageId)) {
 // 			return;
 // 		}
 		var document = editor.document.getText().split("\n");
@@ -272,13 +272,13 @@ export function activate(context: vscode.ExtensionContext) {
 	function getSettings() {
 		const config = vscode.workspace.getConfiguration("bob-highlightDuplicates");
 
-		const active: boolean = config.get("active", false);
+		const active: boolean = config.get("active", true);
 		const borderWidth: string = config.get("borderWidth", "1px");
 		const borderStyle: string = config.get("borderStyle", "solid");
-		const borderColor: string = config.get("borderColor", "red");
+		const borderColor: string = config.get("borderColor", "yellow");
 		const trimWhiteSpace: boolean = config.get("trimWhiteSpace", true);
-		const ignoreCase: boolean = config.get("ignoreCase", false);
-		const minLineLength: number = config.get("minLineLength", 1);
+		const ignoreCase: boolean = config.get("ignoreCase", true);
+		const minLineLength: number = config.get("minLineLength", 5);
 		const minDuplicateCount: number = config.get("minDuplicateCount", 1);
 		const ignoreList: Array<string> = config.get("ignoreList", []);
 		const ignoreCaseForIgnoreList: boolean = config.get("ignoreCaseForIgnoreList", true);
