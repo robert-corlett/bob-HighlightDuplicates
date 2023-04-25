@@ -26,20 +26,20 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//Adds commands
 	context.subscriptions.push(
-		vscode.commands.registerCommand('highlight-duplicates.toggleHighlightDuplicates', () => {
+		vscode.commands.registerCommand('bob-highlight-duplicates.toggleHighlightDuplicates', () => {
 			if (firstActive) {
 				firstActive = false;
-				vscode.workspace.getConfiguration('highlightDuplicates').update('active', true, true);
+				vscode.workspace.getConfiguration('bob-highlightDuplicates').update('active', true, true);
 			} else {
-				vscode.workspace.getConfiguration('highlightDuplicates').update('active', !settings.active, true);
+				vscode.workspace.getConfiguration('bob-highlightDuplicates').update('active', !settings.active, true);
 			}
 			highlightLines();
 		}),
-		vscode.commands.registerCommand('highlight-duplicates.selectDuplicates', () => {
+		vscode.commands.registerCommand('bob-highlight-duplicates.selectDuplicates', () => {
 			firstActive = false;
 			selectLines();
 		}),
-		vscode.commands.registerCommand('highlight-duplicates.removeDuplicates', () => {
+		vscode.commands.registerCommand('bob-highlight-duplicates.removeDuplicates', () => {
 			firstActive = false;
 			removeDuplicates();
 		})
@@ -54,6 +54,10 @@ export function activate(context: vscode.ExtensionContext) {
 	//Document change listener, only listens for changes in active editor
 	vscode.workspace.onDidChangeTextDocument((changeEvent) => {
 		try {
+			if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+				return;
+			}
+			
 			if (changeEvent.document !== vscode.window.activeTextEditor?.document) {
 				return;
 			}
@@ -68,7 +72,12 @@ export function activate(context: vscode.ExtensionContext) {
 	//Active window change listener
 	vscode.window.onDidChangeActiveTextEditor(() => {
 		try {
-			highlightLines();
+			if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+				return;
+			} else {
+				highlightLines();
+			};
+			
 		} catch (error) {
 			console.error("Error from 'window.onDidChangeActiveTextEditor' -->", error);
 		}
@@ -97,6 +106,9 @@ export function activate(context: vscode.ExtensionContext) {
 	function highlightLines(updateAllVisibleEditors = false) {
 		vscode.window.visibleTextEditors.forEach((editor: vscode.TextEditor) => {
 			try {
+				if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+					return;
+				}
 
 				if (!editor) {
 					return;
@@ -105,13 +117,18 @@ export function activate(context: vscode.ExtensionContext) {
 					return;
 				}
 
-				unHighlightLines(editor.document.uri);
+				if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+					unHighlightLines(editor.document.uri);
+				}
 
 				if (!settings.active) {
 					return;
 				}
+				
+				if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {				
+					setDecorations(editor, countLines(editor, false));
+				}
 
-				setDecorations(editor, countLines(editor, false));
 			}
 			catch (error) {
 				console.error("Error from 'highlightLines' -->", error);
@@ -147,8 +164,8 @@ export function activate(context: vscode.ExtensionContext) {
 	function selectLines() {
 		try {
 			var editor = vscode.window.activeTextEditor;
-
-			if (editor?.document && editor?.selections) {
+				
+			if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId) && editor?.document && editor?.selections) {
 				var countedLines: CountedLines = countLines(editor);
 				var newSelections = [];
 
@@ -171,7 +188,7 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			var editor = vscode.window.activeTextEditor;
 
-			if (editor?.document && editor?.selections) {
+			if ("plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId) && editor?.document && editor?.selections) {
 				var countedLines: CountedLines = removeFirst(countLines(editor));
 
 				editor.edit(builder => {
@@ -203,6 +220,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	function countLines(editor: vscode.TextEditor, useSelection: boolean = settings.useSelection): CountedLines {
 		var results: CountedLines = {};
+		
+// 		if (!"plaintext shellscript markdown".includes(vscode.window.activeTextEditor.document.languageId)) {
+// 			return;
+// 		}
 		var document = editor.document.getText().split("\n");
 
 		var lines: number[] = [];
@@ -248,7 +269,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	function getSettings() {
-		const config = vscode.workspace.getConfiguration("highlightDuplicates");
+		const config = vscode.workspace.getConfiguration("bob-highlightDuplicates");
 
 		const active: boolean = config.get("active", false);
 		const borderWidth: string = config.get("borderWidth", "1px");
