@@ -12,6 +12,7 @@ type Settings = {
 	ignoreList: Array<string>;
 	ignoreCaseForIgnoreList: boolean;
 	useSelection: boolean;
+	languages: string;
 };
 
 type CountedLines = {
@@ -282,7 +283,8 @@ export function activate(context: vscode.ExtensionContext) {
 		const ignoreList: Array<string> = config.get("ignoreList", []);
 		const ignoreCaseForIgnoreList: boolean = config.get("ignoreCaseForIgnoreList", true);
 		const useSelection: boolean = config.get("useSelection", false);
-
+		const languages: string = config.get("languages", "plaintext shellscript markdown");
+		
 		if (ignoreCaseForIgnoreList) {
 			for (var i in ignoreList) {
 				ignoreList[i] = ignoreList[i].toLocaleLowerCase();
@@ -300,7 +302,8 @@ export function activate(context: vscode.ExtensionContext) {
 			minDuplicateCount,
 			ignoreList,
 			ignoreCaseForIgnoreList,
-			useSelection
+			useSelection,
+			languages
 		};
 
 		return settings;
