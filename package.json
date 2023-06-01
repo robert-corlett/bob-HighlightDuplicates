@@ -2,7 +2,7 @@
 	"name": "bob-highlight-duplicates",
 	"displayName": "Highlight Duplicates [bob]",
 	"description": "Highlight duplicated lines (same as in Sublime Text 3) [bob]",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -44,27 +44,42 @@
 				"bob-highlightDuplicates.active": {
 					"type": "boolean",
 					"default": true,
-					"description": ""
+					"description": "enable/disable the extension"
 				},
 				"bob-highlightDuplicates.borderWidth": {
 					"type": "string",
 					"default": "1px",
-					"description": ""
+					"description": "border width to highlight duplicates with"
 				},
 				"bob-highlightDuplicates.borderStyle": {
 					"type": "string",
 					"default": "solid",
-					"description": ""
+					"description": "none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset | initial | inherit"
 				},
 				"bob-highlightDuplicates.borderColor": {
 					"type": "string",
 					"default": "yellow",
-					"description": ""
+					"description": "border color to highlight duplicates with"
+				},
+				"bob-highlightDuplicates.backgroundColor": {
+					"type": "string",
+					"default": "rgba(179,255,174,30)",
+					"description": "background color to highlight duplicates with"
+				},
+				"bob-highlightDuplicates.gutterIconSize": {
+					"type": "string",
+					"default": "contain",
+					"description": "auto | contain | cover | <percentage>"
+				},
+				"bob-highlightDuplicates.gutterIconSVG": {
+					"type": "string",
+					"default": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTMuMjIgMTkuMDNhLjc1Ljc1IDAgMCAxIDAtMS4wNkwxOC4xOSAxM0gzLjc1YS43NS43NSAwIDAgMSAwLTEuNWgxNC40NGwtNC45Ny00Ljk3YS43NDkuNzQ5IDAgMCAxIC4zMjYtMS4yNzUuNzQ5Ljc0OSAwIDAgMSAuNzM0LjIxNWw2LjI1IDYuMjVhLjc1Ljc1IDAgMCAxIDAgMS4wNmwtNi4yNSA2LjI1YS43NS43NSAwIDAgMS0xLjA2IDBaIiBmaWxsPSIjNzhlOWZmIi8+PC9zdmc+",
+					"description": "base64 encoded svg icon to use in the gutter"
 				},
 				"bob-highlightDuplicates.trimWhiteSpace": {
 					"type": "boolean",
 					"default": true,
-					"description": ""
+					"description": "trim whitespace from lines before comparing"
 				},
 				"bob-highlightDuplicates.ignoreCase": {
 					"type": "boolean",
