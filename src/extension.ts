@@ -5,6 +5,9 @@ type Settings = {
 	borderWidth: string;
 	borderStyle: string;
 	borderColor: string;
+	backgroundColor: string;
+	gutterIconSize: string;
+	gutterIconSVG: string;
 	trimWhiteSpace: boolean;
 	ignoreCase: boolean;
 	minLineLength: number;
@@ -282,6 +285,9 @@ export function activate(context: vscode.ExtensionContext) {
 		const borderWidth: string = config.get("borderWidth", "1px");
 		const borderStyle: string = config.get("borderStyle", "solid");
 		const borderColor: string = config.get("borderColor", "yellow");
+		const backgroundColor: string = config.get("backgroundColor", "rgba(179,255,174,30)");
+		const gutterIconSize: string = config.get("gutterIconSize", "contain");
+		const gutterIconSVG: string = config.get("gutterIconSVG", "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTMuMjIgMTkuMDNhLjc1Ljc1IDAgMCAxIDAtMS4wNkwxOC4xOSAxM0gzLjc1YS43NS43NSAwIDAgMSAwLTEuNWgxNC40NGwtNC45Ny00Ljk3YS43NDkuNzQ5IDAgMCAxIC4zMjYtMS4yNzUuNzQ5Ljc0OSAwIDAgMSAuNzM0LjIxNWw2LjI1IDYuMjVhLjc1Ljc1IDAgMCAxIDAgMS4wNmwtNi4yNSA2LjI1YS43NS43NSAwIDAgMS0xLjA2IDBaIiBmaWxsPSIjNzhlOWZmIi8+PC9zdmc+");
 		const trimWhiteSpace: boolean = config.get("trimWhiteSpace", true);
 		const ignoreCase: boolean = config.get("ignoreCase", true);
 		const minLineLength: number = config.get("minLineLength", 5);
@@ -302,6 +308,9 @@ export function activate(context: vscode.ExtensionContext) {
 			borderWidth,
 			borderStyle,
 			borderColor,
+			backgroundColor,
+			gutterIconSize,
+			gutterIconSVG,
 			trimWhiteSpace,
 			ignoreCase,
 			minLineLength,
@@ -321,6 +330,9 @@ export function activate(context: vscode.ExtensionContext) {
 			borderWidth: `${settings.borderWidth}`,
 			borderStyle: `${settings.borderStyle}`,
 			borderColor: `${settings.borderColor}`,
+			backgroundColor: `${settings.backgroundColor}`,
+			gutterIconPath: URI.parse(`${settings.gutterIconSVG}`),
+			gutterIconSize: `${settings.gutterIconSize}`
 		});
 
 		return decorationType;
