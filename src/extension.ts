@@ -331,7 +331,7 @@ export function activate(context: vscode.ExtensionContext) {
 			borderStyle: `${settings.borderStyle}`,
 			borderColor: `${settings.borderColor}`,
 			backgroundColor: `${settings.backgroundColor}`,
-			gutterIconPath: URI.parse(`${settings.gutterIconSVG}`),
+			gutterIconPath: vscode.Uri.parse(`${settings.gutterIconSVG}`),
 			gutterIconSize: `${settings.gutterIconSize}`
 		});
 
